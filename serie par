@@ -1,0 +1,26 @@
+#include "stdafx.h"
+#include <iostream>
+#include "stdlib.h"
+#include "conio.h"
+#include "math.h"
+using namespace std;
+void main()
+{
+int N,s=0,i=2;
+do
+{
+ cout <<"introdusca un valor limite para la suma";
+ cin >>N;
+}while(N<2);
+
+do{
+	s=s+i;
+	i=i+2;
+  }while(i<=N);
+ 
+cout<<"\n la suma es:" <<s;
+ 
+getch();
+
+} 
+
