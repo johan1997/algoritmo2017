@@ -1,0 +1,126 @@
+# algoritmo2017
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+#include <string>
+#include "math.h"
+#include "stdlib.h"
+#define MAX 1000
+
+
+
+using namespace std;
+float area(float a,float b, float c);
+void llenarvec (float V[], int lim);
+void promedios (float V[], int lim,float P[]);
+
+
+void palindromo(string var2);
+void main()
+{int opcion,N,lim,i;
+float a,b,c,A,V[MAX],P[MAX];
+string palabra;
+do{
+    cout<<"*****MENU*****"<<endl;
+    cout<<"1.Función para encontrar el area del triangulo en funcion de sus lados "<<endl;
+    cout<<"2.´diferencian mas grande "<<endl;
+    cout<<"3. palindromo: "<<endl;
+    cout<<"0. Salir"<<endl;
+    cout<<"Elija la opcion que prefiera";
+    cin>>opcion;
+    switch(opcion)
+    {case 1 :
+	
+         {float a,b,c,A;
+         cout<<"ingrese el primer lado";
+         cin>>a;
+         cout<<"ingrese el segundo lado";
+         cin>>b;
+         cout<<"ingrese el tercer lado";
+         cin>>c;
+         A=area(a,b,c);
+         cout<<"El area del triangulo segun sus lados: "<<A<<endl;
+		 }
+         break;
+	 
+     case 2: 
+         {do
+		  {cout<<"ingrese el limite de cifras";
+	       cin>>lim;
+		  }while(lim<3||lim>MAX );
+		  llenarvec (V, lim);
+          promedios (V,lim, P);
+		  for(int i=0;i<(lim-2);i++)
+         cout<<"el promedio de :" <<V[i]<<"+"<<V[i+1]<<"+"<<V[i+2]<<"= "<<P[i]<<endl;
+
+		 }
+         break; 
+     case 3:
+		 {
+         getline(cin, palabra);
+         palindromo(palabra);
+
+         break;
+         }
+
+     case 0:
+         {cout<<"salir";
+		 break;
+		 }
+     default:
+        { cout<<"error"<<endl;
+             break;
+        }
+	}
+   
+    }while( opcion != 0);   
+
+    getch();
+
+ 
+}
+
+float area(float a,float b, float c)
+{ float A;
+    A=sqrt(((a+b+c)*(-a+b+c)*(a-b+c)*(a+b-c))/16);
+    
+    return A;
+}
+void llenarvec (float V[], int lim)
+{int i;
+for( i=0;i<lim; i++)
+ {cout<<"vec["<<i<<"]=";
+ cin>>V[i];
+ }
+}
+void promedios (float V[], int lim,float P[])
+{int j=0;
+	for(int i=0;i<(lim-2);i++)
+	{
+    P[i]=(V[j]+V[j+1]+V[j+2])/3;
+	j=j+1;}
+}
+	
+
+
+
+
+void palindromo(string var2)
+{  int longitud,aux;
+    string palabra;
+	  cout<<"Ingrese uan palabra: ";
+        getline(cin,palabra);
+        var2=palabra;
+        longitud=palabra.length();
+        for(int i=0;i<longitud/2;i++)
+        {aux=palabra[i];
+         palabra[i]=palabra[longitud-1-i];
+         palabra[longitud-1-i]=aux;
+        }
+         cout<<"El nombre invertido es: "<<palabra<<endl;
+         if(var2.compare(palabra)==0)
+           cout<<"Es un palindromo"<<endl;
+         else
+            cout<<"No es un palindromo"<<endl;
+}
+
