@@ -1,0 +1,144 @@
+# algoritmo2017
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+#include "stdlib.h"
+#define max 100
+using namespace std;
+void llenar(int v[],int n);
+void mostrar(int v[],int n,int vec[]);
+
+void main()
+
+{int i,j=0,h=0,a=0,n,v[max],vec[max];
+do
+{
+ cout <<"introdusca numero de terminos"<<endl;
+ cin >>n;
+}while(n<1);
+ llenar(v,n);
+ mostrar( v, n,vec);
+ getch();
+
+ 
+
+}
+void llenar(int v[],int n)
+{int i;
+ for( i=0;i<n;i++)
+ {cout<<"v["<<i<<"]=";
+ cin>>v[i];
+ }
+}
+void mostrar(int v[],int n,int vec[])
+{int i,h=0,j=0,a=0,p;
+  while(j<n)
+  {for(i=1;i<=v[j];i++)
+  {if(v[j]%i==0)
+  { h++;
+  }
+  }
+  if(h>2)
+  {vec[a]=v[j];
+  a++;
+  }
+  j++;
+  h=0;
+  }
+  p=a;
+  for(int l=0;l<p;l++)
+	  cout<<vec[l]<<" ";
+}
+
+
+
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+#include "stdlib.h"
+#include <string>
+#define MAX 100
+
+using namespace std;
+void funcion(float X,float N);
+
+void main()
+
+{float X,N;
+
+do
+ {
+  cout<<"ingrese el numero de elementos";
+  cin>>N;
+ } while(N<0);
+   cout<<"ingrese el valor";
+   cin>>X;
+   funcion(X,N);
+ getch();
+}
+
+ void funcion(float X,float N)
+
+ {float t,k,S;
+  int i;
+  S=0;
+  t=0;
+  k=1;
+  for(i=1;i<N;i++)
+   {t=t*i;
+    if(i%2!=0)
+    k=pow(-1,(k))*pow(X,N);
+    S=S+k/t;
+	k++;
+  }
+   S=S+3;
+   cout<<"la sumatoria es: "<<S<<endl;
+  }
+
+  
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+#include "stdlib.h"
+#include <string>
+#define max 100
+
+using namespace std;
+
+void llenarvec(int V[],int N);
+void multiplos(int B[],int M);
+void clasificar(int V[],int N);
+void prom(int V[],int N);
+int consonante(string palabra);
+
+void main()
+
+{string palabra;
+  int cont;
+  cont=0;
+  cout<<"ingrese la frase"<<endl;
+  getline(cin,palabra);
+  cont=consonante(palabra);
+  cout<<cont;
+  getch();
+
+}
+
+ 
+
+int consonante(string palabra)
+
+{int i,longitud;
+longitud=palabra.length();
+int cont=0;
+
+ cout<<"Contar consonantes"<<endl;
+ for (i=0;i<longitud;i++)
+
+  {if (palabra[i]=='A' || palabra[i]=='B'||palabra[i]=='C'||palabra[i]=='D'||palabra[i]=='E'||palabra[i]=='F'||palabra[i]=='G'||palabra[i]=='H'||palabra[i]=='I'||palabra[i]=='J'||palabra[i]=='K'||palabra[i]=='M'||palabra[i]=='N'||palabra[i]=='O'||palabra[i]=='P'||palabra[i]=='Q'||palabra[i]=='R'||palabra[i]=='S'||palabra[i]=='T'||palabra[i]=='U'||palabra[i]=='V'||palabra[i]=='W'||palabra[i]=='X'||palabra[i]=='Y'||palabra[i]=='Z'||palabra[i]=='L')
+   cont++;
+
+       }
+return cont;    
+
+}
