@@ -1,0 +1,77 @@
+# algoritmo2017
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+#define max  8
+
+using namespace std;
+
+void llena(int mat[max][max],int n, int m);
+void mostrar(int mat[max][max],int n, int m);
+void transpuesta(int tra[max][max],int mat[max][max],int n, int m);
+void transpuestam(int tra[max][max],int mat[max][max],int n, int m);
+
+void main ()
+{int mat[max][max],n,m,tra[max][max];
+do
+{
+cout<<"introducir el numero de filas"<<endl;
+cin>>n;
+}while(n<1||n>max);
+do
+{
+cout<<"introducir le numero de columnas"<<endl;
+cin>>m;
+}while(m<1||m>max);
+cout<<"llenar la matriz"<<endl;
+ llena( mat, n,  m);
+ cout<<endl;
+ cout<<"la matriz"<<endl;
+ mostrar( mat, n,  m);
+ transpuesta( tra,mat, n,  m);
+ cout <<"matriz transpuesta"<<endl;
+ transpuestam( tra,mat, n,  m);
+
+
+
+getch();
+}
+void llena(int mat[max][max],int n, int m)
+{int i,j;
+ for(i=0;i<n;i++)
+	 for(j=0;j<m;j++)
+      cin>>mat[i][j];
+      
+}
+void mostrar(int mat[max][max],int n, int m)
+{int i,j;
+ for(i=0;i<n;i++)
+	{
+		for(j=0;j<m;j++)
+         {cout<<" "<<mat[i][j]<<" ";
+	 
+		 }
+		cout<<endl;
+    }
+}
+void transpuesta(int tra[max][max],int mat[max][max],int n, int m)
+{int i,j,aux;
+ for(i=0;i<n;i++)
+	{
+		for(j=0;j<m;j++)
+		{ tra[j][i]=mat[i][j];
+		}
+    }
+}
+
+void transpuestam(int tra[max][max],int mat[max][max],int n, int m)
+{int i,j;
+ for(i=0;i<m;i++)
+	{
+		for(j=0;j<n;j++)
+         {cout<<" "<<tra[i][j]<<" ";
+	 
+		 }
+		cout<<endl;
+    }
+}
