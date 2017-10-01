@@ -1,0 +1,112 @@
+# algoritmo2017
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+#define max 5
+using namespace std;
+void cargarmatriz(int v[max][max], int x);
+void mostrarmatriz(int v[max][max], int x);
+void matrizmagica(int v[max][max], int x);
+
+void main()
+{
+	int matriz[max][max], n, matriztransp[max][max];
+	cout << "programa que verifica si es una matriz magica " << endl;
+	do
+	{
+		cout << "introduzca el tamaño de la matriz (matriz cuadrada)" << endl;
+		cin >> n;
+	} while (n<0 || n>max);
+	cout << "carge la matriz" << endl;
+	cargarmatriz(matriz, n);
+	cout << endl;
+	cout << " matriz";
+	cout << endl;
+	mostrarmatriz(matriz, n);
+	cout << endl;
+	matrizmagica(matriz, n);
+	cout << endl;
+	
+	getch();
+}
+
+void cargarmatriz(int v[max][max], int x)
+{
+	int i, j;
+	for (i = 0; i < x; i++)
+		for (j = 0; j < x; j++)
+			cin >> v[i][j];
+}
+
+void mostrarmatriz(int v[max][max], int x)
+{
+	int i, j;
+	for (i = 0; i < x; i++)
+	{
+		for (j = 0; j < x; j++)
+		{
+			cout << " " << v[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+void matrizmagica(int v[max][max], int x)
+{
+	int i, j, s = 0, h = 0, b = 0, d = 0, m = 0;
+	for (i = 0; i < 1; i++)
+		for (j = 0; j < x; j++)
+		{
+			s = s + v[i][j];
+		}
+
+	for (i = 1; i < x; i++)
+	{
+		for (j = 0; j < x; j++)
+		{
+			h = h + v[i][j];
+		}
+		if (h != s)
+		{
+			m++;
+		}
+		h = 0;
+	}
+
+	for (j = 1; j < x; j++)
+	{
+		for (i = 0; i < x; i++)
+		{
+			b = b + v[i][j];
+		}
+		if (b != s)
+		{
+			m++;
+		}
+		b = 0;
+	}
+
+	for (i = 0; i < x; i++)
+	{
+		for (j = 0; j < x; j++)
+		{ 
+			if (i == j)
+			{
+				d = d + v[i][j];
+			}
+		}
+	
+	}
+	if (d != s)
+	{
+		m++;
+	}
+	if (m != 0)
+	{
+		cout << "no es matriz magica";
+		cout << m;
+	}
+	else
+	{
+		cout << "es matriz magica";
+	}
+}
