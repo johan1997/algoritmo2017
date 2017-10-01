@@ -1,0 +1,110 @@
+# algoritmo2017
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+#define max 20
+
+using namespace std;
+
+void cargarmatriz(int v[max][max], int x);
+void mostrarmatriz(int v[max][max], int x);
+void matriztranspuesta(int v[max][max], int x, int b[max][max]);
+
+void main()
+{
+	int matriz[max][max], n, matrizt[max][max];
+	cout << "cargar matriz con numeros naturales de forma circular " << endl;
+	do
+	{
+		cout << "introduzca el tamaño de la matriz " << endl;
+		cin >> n;
+	} while (n<0 || n>max);
+	cout << "cargando la matriz" << endl;
+	cargarmatriz(matriz, n);
+	cout << endl;
+	cout << " matriz de forma cilcular ";
+	cout << endl;
+	mostrarmatriz(matriz, n);
+	cout << endl;
+	matriztranspuesta(matriz, n, matrizt);
+	cout << " matriz de forma cilcular en direccion contraria ";
+	cout << endl;
+	mostrarmatriz(matrizt, n);
+	cout << endl;
+
+	getch();
+}
+
+void cargarmatriz(int v[max][max], int x)
+{
+	int i, inicio = 0, limite = x - 1, c = 1, n;
+	n = x*x;
+	while (c <= n)
+	{
+		for (i = inicio; i <= limite; i++)
+		{
+			cout << c << endl;
+			v[inicio][i] = c;
+			c++;
+		}
+		for (i = (inicio + 1); i <= limite; i++)
+		{
+			cout << c << endl;
+			v[i][limite] = c;
+			c++;
+		}
+		for (i = (limite - 1); i >= inicio; i--)
+		{
+			cout << c << endl;
+			v[limite][i] = c;
+			c++;
+		}
+		for (i = (limite - 1); i >= (inicio + 1); i--)
+		{
+			cout << c << endl;
+			v[i][inicio] = c;
+			c++;
+		}
+		inicio = inicio + 1;
+		limite = limite - 1;
+	}
+}
+
+void matriztranspuesta(int v[max][max], int x, int b[max][max])
+{
+
+	int i, j;
+	for (i = 0; i < x; i++)
+		for (j = 0; j < x; j++)
+		{
+			b[i][j] = v[j][i];
+		}
+}
+
+void mostrarmatriz(int v[max][max], int x)
+{
+	int i, j;
+	for (i = 0; i < x; i++)
+	{
+		for (j = 0; j < x; j++)
+		{
+			if(v[i][j]>=100)
+			{ 
+				cout << v[i][j] << "  ";
+			}
+			else
+			{
+				if (v[i][j] < 10)
+				{
+					cout << "  " << v[i][j] << "  ";
+				}
+				else
+				{
+					cout << " " << v[i][j] << "  ";
+				}
+			}
+			
+		}
+		cout << endl;
+	}
+}
