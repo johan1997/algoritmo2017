@@ -1,0 +1,74 @@
+# algoritmo2017
+#include "stdafx.h"
+#include <iostream>
+#include "stdlib.h"
+#include "conio.h"
+#include <string>
+using namespace std;
+FILE*alias;//declaramos el buffer que apunta al archivo en el disco duro
+struct tipo_registro
+{ 
+   int no_prod; 
+   string descrip; 
+   int cantidad; 
+   float precio; 
+   char garantia; 
+}; 
+
+tipo_registro  Registro; 
+void ALTA_SECUENCIAL() ;
+
+void main()
+{
+  ALTA_SECUENCIAL();
+  getch();
+}
+
+
+void ALTA_SECUENCIAL(void) 
+ {
+  int no_prod;  // Variable local para el numero de producto 
+  system("cls"); //ejecutar un comando del sistema operativo windows
+  cout << "\n\tALTAS DE REGISTROS DE PRODUCTOS"; 
+  alias=fopen("PRODUCTO.SEC","rb+"); // Intenta abrir el archivo  
+                                     // en modo de lectura/escritura 
+  if(alias==NULL) 
+    alias=fopen("PRODUCTO.SEC","wb"); // Crea el archivo en caso de no 
+                                      // existir 
+  cout << "\n\n\n\rNumero de producto: "; 
+  cin >> no_prod; //la clave primaria-primary key
+
+  fread(&Registro,sizeof(Registro),1,alias); 
+  // Lee el "Registro", de tamano=sizeof(Registro) del archivo "alias" 
+  while(!feof(alias)) // Ciclo mientras no se encuentre el final del 
+                      // archivo 
+  { 
+    if(Registro.no_prod==no_prod) 
+    { 
+       cout << "\n\n\n\rRegistro duplicado !!!"; 
+       fclose(alias); 
+       getch(); 
+       return;//regresa el programa principal 
+    } 
+    fread(&Registro,sizeof(Registro),1,alias); //lee todos los archivos 1x1
+  } 
+  cout << "\n\rDescripcion: ";
+  cin.ignore();
+  getline(cin,Registro.descrip); 
+  cout << "\n\rCantidad   : ";
+  cin >> Registro.cantidad; 
+  cout << "\n\rPrecio     : ";
+  cin >> Registro.precio; 
+  do 
+  { 
+    cout << "\n\rGarantia   : ";
+	Registro.garantia=toupper(getche()); //para que me lo cambie a mayuscula las letras minusculas
+  }while(Registro.garantia!='S' && Registro.garantia!='N'); 
+  Registro.no_prod=no_prod; 
+  fwrite(&Registro,sizeof(Registro),1,alias); // Grabar el Registro  
+  fclose(alias); // Cierra el archivo 
+  cout << "\n\n\n\tProducto registrado !!!"; 
+  cout << "\n\r<<< Oprima cualquier tecla para continuar >>>"; 
+  getch(); 
+  return; 
+} 
