@@ -1,0 +1,74 @@
+# algoritmo2017
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+
+#define max 10
+
+
+using namespace std;
+
+void cargar(int matrix[max][max], int n, int m);
+void mostrar(int matrix[max][max], int n, int m);
+int mayor(int matrix[max][max], int n, int m);
+
+void main()
+{
+	int n, m, matriz[max][max];
+	do
+	{
+		cout << "Ingrese el numero de filas: ";
+		cin >> n;
+	} while ((n>max) || (n <= 0));
+	do
+	{
+		cout << "Ingrese el numero de columnas: ";
+		cin >> m;
+	} while ((m>max) || (m <= 0));
+
+	cargar(matriz, n, m);
+	cout << endl << "matriz" << endl;
+	mostrar(matriz, n, m);
+	cout << endl << "El mayor valor de la matriz es: " << mayor(matriz, n, m);
+	cout << endl;
+	getch();
+}
+
+void cargar(int matrix[max][max], int n, int m)
+{
+	int i, j;
+
+	for (i = 0; i<n; i++)
+		for (j = 0; j<m; j++)
+		{
+			cout << "mat [" << i << "] [" << j << "]: ";
+			cin >> matrix[i][j];
+		}
+}
+
+void mostrar(int matrix[max][max], int n, int m)
+{
+	int i, j;
+
+	for (i = 0; i<n; i++)
+	{
+		for (j = 0; j<m; j++)
+			cout << matrix[i][j] << "\t";
+		cout << endl;
+	}
+}
+
+int mayor(int matrix[max][max], int n, int m)
+{
+	int tmayor, i, j;
+
+	tmayor = matrix[0][0];
+	for (i = 0; i<n; i++)
+		for (j = 0; j<m; j++)
+		{
+			if (tmayor<matrix[i][j])
+				tmayor = matrix[i][j];
+
+		}
+	return tmayor;
+}
