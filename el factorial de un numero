@@ -1,0 +1,34 @@
+# algoritmo2017
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+#define max 1000
+using namespace std;
+int factorial(int n);
+void main()
+{
+	int num;
+	cout << "introduzca un numero del cual desea calcular su factorial: ";
+	do
+	{
+		cin >> num;
+		if (num<0 || num>max)
+		{
+			cout << endl << "el numero esta fuera del rango limite" << endl;
+			cout << "introduzca otro numero: ";
+		}
+	} while (num<0 || num>max);
+	cout << "el factorial del numero " << num << " es: " << factorial(num) << endl;
+
+	getch();
+}
+
+int factorial(int n) 
+{
+	int fac = 1;
+	for (int i = 1; i <= n; i++)
+	{
+		fac = fac * i;
+	}
+	return fac;
+}
