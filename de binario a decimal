@@ -1,0 +1,27 @@
+# algoritmo2017
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+//#include "stdlib.h"
+#include "math.h"
+
+using namespace std;
+
+
+
+void main()
+{int N,M,s=0,i=0; 
+ float p;
+ cout<<"Ingrese el numero binario: ";
+ cin>>N;
+ do
+ {p=pow(2.0,i);
+   i=i+1;
+   M=N%10;
+   s=s+p*M;
+   N=N/10;
+  }
+ while(N!=0);
+ cout<<"El numero en base 10 es: "<<s;
+	getch();
+}
