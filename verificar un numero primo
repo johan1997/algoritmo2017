@@ -1,0 +1,53 @@
+# algoritmo2017
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+
+using namespace std;
+bool VerificarNroPrimo(int x);
+
+void main()
+{
+	int n;
+	cout << "verifique si es un numero primo" << endl;
+	do {
+		cout << "Ingresa un numero entero: ";
+		cin >> n;
+	} while (n <= 0);
+
+	if (VerificarNroPrimo(n) == true)
+	{
+		cout << "\t" << n << " Es primo" << endl;
+	}
+	else
+	{
+		cout << "\t" << n << " No es primo  " << endl;
+	}
+
+	_getch();
+}
+
+bool VerificarNroPrimo(int x)
+{
+	int i;
+	bool j = true;
+	if (x == 1)
+	{
+		j = false;
+	}
+	else
+	{
+		for (i = 2; i <= (x - 1); i++)
+		{
+			{
+				if (x % i == 0)
+				{
+					j = false;
+					i = x;
+				}
+			}
+
+		}
+	}
+
+	return (j);
