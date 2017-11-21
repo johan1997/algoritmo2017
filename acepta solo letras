@@ -1,0 +1,42 @@
+# algoritmo2017
+#include "stdafx.h"
+#include <iostream>
+#include <string>
+#include "conio.h"
+
+void validarletras();
+
+using namespace std;
+
+void main()
+{
+	cout << "validar solo letras" << endl;
+	validarletras();
+	getch();
+}
+
+
+void validarletras()
+{
+	int c, au;
+	string palabra;
+	cout << "Ingresar una palabra: ";
+	do
+	{
+		getline(cin, palabra);
+		c = palabra.length();
+		for (int i = 0; i < c; i++)
+		{
+			if (isdigit(palabra[i]))
+			{
+				cout << "ingresa solo letras: ";
+				au = 0;
+				i = c;
+			}
+			else
+			{
+				au = 1;
+			}
+		}
+	} while (au == 0);
+	cout << "la palabra es: " << palabra << endl;
