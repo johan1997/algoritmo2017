@@ -1,0 +1,1107 @@
+# algoritmo2017
+#include "stdafx.h"
+#include "conio.h"
+#include <string>
+#include <iostream>
+using namespace std;
+
+FILE* alias;
+
+struct t_usuario{
+ string clave;
+ string nombre;
+ int ci;
+ string correo;
+ int tel;
+ int estado;
+};
+
+struct t_restaurante{
+ string nombre;
+ string clave;
+ string ubicacion;
+ int nit;
+ string correo;
+ int tel;
+ int estado;
+ string ub;
+};
+
+
+t_usuario usuario;
+t_restaurante restaurante;
+
+void menucase3();
+void adminingresar();
+void menuadmin();
+
+
+void menucase2();
+void creararchivorestaurante();
+bool verificarNit(int nit);
+bool verificarci(int ci);
+void altarestaurante();
+void listadorestaurante();
+void menucase1();
+void creararchivousuario();
+void altausuario();
+void listarusuario();
+void buscarusuario();
+void buscarrestaurante();
+void eliminarusuario();
+void eliminarrestaurante();
+//void modificarusuario();
+//void modificarrestaurante();
+void ingresarusuario();
+void ingresarrestaurante();
+void menuusuario();
+void menurestaurante();
+string lugar();
+void l(string p);
+
+
+bool verificarNit(int nit){
+bool k=false;
+alias=fopen("restaurante.sec","rb");
+if(alias!=NULL){
+fread(&restaurante,sizeof(restaurante),1, alias);
+while(!feof(alias))
+{
+if(nit==restaurante.nit){
+   k=true;
+   cout<<"\nel NIT ya existe"<<endl;
+}
+    fread(&restaurante,sizeof(restaurante),1, alias);
+}
+fclose(alias);
+}
+return(k);
+}
+bool verificarci(int ci){
+bool k=false;
+alias=fopen("usuario.sec","rb");
+if(alias!=NULL){
+fread(&usuario,sizeof(usuario),1, alias);
+while(!feof(alias))
+{
+if(ci==usuario.ci){
+   k=true;
+   cout<<"\nel ci ya existe"<<endl;
+}
+    fread(&usuario,sizeof(usuario),1, alias);
+}
+fclose(alias);
+}else{
+cout<<"\nel archivo no existe";
+}
+return(k);
+}
+string LeerCadena(string mensaje)
+{
+string str="";
+do
+{
+cout<<mensaje;
+getline(cin,str);
+fflush(stdin);
+cin.clear();
+}while(str=="");
+return str;
+}
+
+
+
+void main()
+{int op;
+ string nombre;
+do
+{
+cout<<"-------BIENVENIDOS A RUTA GOURMET-------"<<endl;
+cout<<"1.Usuario"<<endl;
+cout<<"2.Restaurante"<<endl;
+cout<<"3.Admin"<<endl;
+cout<<"0.Salir"<<endl;
+cout<<"--------------"<<endl;
+cout<<"Ingrese la opcion que desee:";
+cin>>op;
+cout<<endl;
+switch(op)
+{
+case 1:
+menucase1();
+break;
+case 2:
+menucase2();
+    break;
+case 3:
+menucase3();
+break;
+case 0:
+   cout<<"SALIR"<<endl;
+   system("cls");
+   break;
+default:
+   cout<<"ERROR"<<endl;
+   system("cls");
+   break;
+}
+}while(op!=0);
+_getch();
+}
+
+void menucase3()
+{
+int op4;
+system("cls");
+do
+{
+cout<<"Usted se encuentra en la opcion ADMINISTRADOR "<<endl;
+cout<<"1.Ingresar"<<endl;
+cout<<"0.Salir"<<endl;
+cout<<"------------"<<endl;
+cout<<"Ingrese la opcion que desee:";
+cin>>op4;
+switch(op4)
+{
+case 1:
+   system("cls");
+   adminingresar();
+   break;
+case 0:
+   cout<<"Salir"<<endl;
+   system("cls");
+   break;
+default:
+   cout<<"Error";
+   system("cls");
+   break;
+}
+}while(op4!=0); 
+}
+
+void adminingresar()
+{
+string usu;
+string con;
+cout<<"Ingrese el usuario:";
+cin>>usu;
+cout<<"Ingrese la clave:";
+cin>>con;
+if(usu=="admin")
+{
+if(con=="123")
+menuadmin();
+}else
+{
+cout<<"Clave incorrecta"<<endl;
+cout<<"<<<Oprima cualquier tecla para continuar>>>";
+getch();
+}
+system("cls");
+return;
+}
+
+void menuadmin()
+{
+int op4;
+system("cls");
+do
+{
+cout<<"Bienvenido ADMINISTRADOR"<<endl;
+cout<<"1.Lista de Usuarios"<<endl;
+cout<<"2.Buscar Usuario"<<endl;
+cout<<"3.Modificar Usuario"<<endl;
+cout<<"4.Eliminar Usuario"<<endl;
+cout<<"5.Lista de Restaurantes"<<endl;
+cout<<"6.Buscar Restaurante"<<endl;
+cout<<"7.Modificar Restaurante"<<endl;
+cout<<"8.Eliminar Restaurante"<<endl;
+cout<<"0.Salir"<<endl;
+cout<<"------------"<<endl;
+cout<<"Ingrese la opcion que desee:";
+cin>>op4;
+switch(op4)
+{
+case 1:
+listarusuario();
+    system("cls");
+    break;
+case 2:
+buscarusuario();
+    system("cls");
+    break;
+case 3:
+//modificarusuario();
+    system("cls");
+    break;
+case 4:
+eliminarusuario();
+    system("cls");
+    break;
+case 5:
+listadorestaurante();
+    system("cls");
+    break;
+case 6:
+buscarrestaurante();
+    system("cls");
+    break;
+case 7:
+//modificarrestaurante();
+    system("cls");
+    break;
+case 8:
+eliminarrestaurante();
+    system("cls");
+    break;
+case 9:
+case 0:
+    cout<<"Salir"<<endl;
+    system("cls");
+    break;
+default:
+    cout<<"Error";
+    system("cls");
+    break;
+}
+}while(op4!=0); 
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+void creararchivousuario()
+{
+ alias=fopen("usuario.sec","ab");
+ fclose(alias);
+}
+
+void creararchivomenu()
+{
+ alias=fopen("menu.sec","ab");
+ fclose(alias);
+}
+
+void menucase1()
+{int op1;
+ system("cls");
+ if(alias==NULL)
+ creararchivousuario();
+    do
+    {cout<<"Usted se encuentra en la opcion usuario"<<endl;
+     cout<<"1.Registrarse"<<endl;
+     cout<<"2.Ingresar"<<endl;
+     cout<<"0.Salir"<<endl;
+     cout<<"-----------"<<endl;
+     cout<<"Ingrese la opcion que desee:";
+     cin>>op1;
+     system("cls");
+  switch(op1)
+  {case 1:
+  altausuario();
+          break;
+   case 2:system("cls");
+      ingresarusuario();
+          break;
+   case 0:
+       cout<<"Salir"<<endl;
+    system("cls");
+    break;
+   default:
+    system("cls");
+    break;
+  }
+    }while(op1!=0); 
+}
+
+void creararchivorestaurante()
+{
+ alias=fopen("restaurante.sec","ab");
+ fclose(alias);
+}
+void menucase2()
+{int op2;
+ system("cls");
+ if(alias==NULL)
+ creararchivorestaurante();
+    do
+    {
+cout<<"Usted se encuentra en la opcion RESTAURANTE"<<endl;
+cout<<"1.Registrarse"<<endl;
+cout<<"2.ingresar"<<endl;
+cout<<"0.Salir"<<endl;
+cout<<"-----------"<<endl;
+cout<<"Ingrese la opcion que desee:";
+cin>>op2;
+system("cls");
+switch(op2)
+{case 1:
+    altarestaurante();
+    break;
+case 2:
+ingresarrestaurante();
+break;
+case 0:
+cout<<"Salir"<<endl;
+system("cls");
+break;
+default:
+system("cls");
+break;
+}
+}while(op2!=0); 
+}
+void altausuario()
+{
+int ci;
+ alias=fopen("usuario.sec","ab");
+  fread(&usuario,sizeof(usuario),1, alias);
+ do{
+ cout<<"Ingrese el CI:";
+ cin>>ci;
+ }while(verificarci(ci)==true);
+ cin.ignore();
+ usuario.nombre=LeerCadena("Ingrese el nombre del usuario:");
+ usuario.clave=LeerCadena("Ingrese la clave del usuario:");
+ usuario.correo=LeerCadena("Ingrese el correo del usuario:");
+ cout<<"Ingrese el telefono del usuario:";
+ cin>>usuario.tel;
+ usuario.ci=ci;
+ usuario.estado=9;
+ alias=fopen("usuario.sec","ab");
+ fwrite(&usuario,sizeof(usuario),1, alias);
+ fclose(alias);
+ system("cls");
+ cout<<"USUARIO REGISTRADO!!!!"<<endl;
+ cout<<"<<<<OPRIMA CUALQUIER TECLA PARA CONTINUAR>>>>";
+ getch();
+ system("cls");
+ }
+string LeerCadenaa(string mensaje)
+{
+string str = "";
+do
+{
+cout<<mensaje;
+getline(cin,str);
+fflush(stdin);
+cin.clear();
+}while(str=="");
+return str;
+}
+
+void altarestaurante()
+{
+int nit;
+ do{
+ cout<<"Ingrese el NIT del restaurante:";
+ cin>>nit;
+ }while(verificarNit(nit)==true);
+ cin.ignore();
+ restaurante.nombre=LeerCadena("Ingrese el nombre del restaurante:");
+ restaurante.clave=LeerCadena("Ingrese la clave del restaurante:");
+ restaurante.correo=LeerCadena("Ingrese el correo del restaurante:");
+ cout<<"Ingrese el telefono del restaurante:";
+ cin>>restaurante.tel;
+ cin.ignore();
+ cout<<"eliga la ubicacion mas cercana a su restaurante"<<endl;
+ restaurante.ub=lugar();
+ cin.ignore();
+ restaurante.ubicacion=LeerCadena("Ingrese la ubicacion especifica del restaurante restaurante:");
+ restaurante.nit=nit;
+ restaurante.estado=9;
+ alias=fopen("restaurante.sec","ab");
+ fwrite(&restaurante,sizeof(restaurante),1, alias);
+ fclose(alias);
+ system("cls");
+ cout<<"RESTAURANTE REGISTRADO!!!!"<<endl;
+ cout<<"<<<<OPRIMA CUALQUIER TECLA PARA CONTINUAR>>>>";
+ getch();
+ system("cls");
+ }
+void listarusuario()
+ {   system("cls"); 
+   cout << "\n\rLISTADO DE USUARIO";
+   alias=fopen("usuario.sec","rb"); // Intenta abrir el archivo PROYECTO.SEC
+   // en modo de solo lectura   
+   if(alias==NULL)   
+   {cout << "\n\n\n\rNo existe el archivo !!!";
+    cout << "\n\r<<< Oprima cualquier tecla para continuar >>>";
+getch();
+return;
+   } 
+
+   cout << "\n\r Nombre     ci      Correo          Telefono ";
+   cout << "\n\r-----------------------------------------------------------------------"<<endl;
+   fread(&usuario,sizeof(usuario),1,alias);
+
+   // Lee el "ususario", de tamano=sizeof(usuario) del archivo "alias"
+   while(!feof(alias)) // Ciclo mientras no se encuentre el final del archivo   
+   {if(usuario.estado==9)
+   {
+     cout<<usuario.nombre<<"    ";
+cout<<usuario.ci<<"    ";
+cout<<usuario.correo<<"    ";
+cout<<usuario.tel<<"    ";
+   }
+    fread(&usuario,sizeof(usuario),1,alias);
+   }   
+   fclose(alias); // Cierra el archivo   
+   cout << "\n\r-----------------------------------------------------------------------";
+   cout << "\n\rFin del listado !!!";
+   cout << "\n\r<<< Oprima cualquier tecla para continuar >>>";
+   getch();
+   return;
+ }
+
+void listadorestaurante()
+ {   system("cls"); 
+   cout << "\n\rLISTADO DE RESTAURANTES";
+   alias=fopen("restaurante.sec","rb"); // Intenta abrir el archivo PROYECTO.SEC
+   // en modo de solo lectura   
+   if(alias==NULL)   
+   {cout << "\n\n\n\rNo existe el archivo !!!";
+    cout << "\n\r<<< Oprima cualquier tecla para continuar >>>";
+getch();
+return;
+   } 
+
+   cout << "\n\r Nombre     Nit      Correo          Telefono          Ubiacion";
+   cout << "\n\r-----------------------------------------------------------------------"<<endl;
+   fread(&restaurante,sizeof(restaurante),1,alias);
+
+   // Lee el "ususario", de tamano=sizeof(usuario) del archivo "alias"
+   while(!feof(alias)) // Ciclo mientras no se encuentre el final del archivo   
+   {if(restaurante.estado==9)
+   {
+     cout<<restaurante.nombre<<"    ";
+cout<<restaurante.nit<<"    ";
+cout<<restaurante.correo<<"    ";
+cout<<restaurante.tel<<"    ";
+cout<<restaurante.ubicacion<<"    "<<endl;
+   }
+    fread(&restaurante,sizeof(restaurante),1,alias);
+   }   
+   fclose(alias); // Cierra el archivo   
+   cout << "\n\r-----------------------------------------------------------------------";
+   cout << "\n\rFin del listado !!!";
+   cout << "\n\r<<< Oprima cualquier tecla para continuar >>>";
+   getch();
+   return;
+ }
+
+void buscarusuario()
+{
+int ci;
+cout<<"CI buscado:";
+cin>>ci;
+FILE *alias;
+alias = fopen("usuario.sec","rb");
+if(alias == NULL)
+{
+cout<<"error, archivo no encontrado"<<endl;
+}
+else
+{
+cout<<"CI Nombre Correo tel"<<endl;
+fread(&usuario,sizeof(usuario),1,alias);
+while(!feof(alias))
+{
+if(usuario.estado == 9)
+{
+if(usuario.ci== ci)
+{
+cout<<usuario.ci<<" ";
+cout<<usuario.nombre<<" ";
+cout<<usuario.correo<<" ";
+cout<<usuario.tel<<endl;
+}
+}
+fread(&usuario,sizeof(usuario),1,alias);
+}
+fclose(alias);
+}
+   cout << "\n\r<<< Oprima cualquier tecla para continuar >>>";
+   getch();
+   return;
+}
+
+void buscarrestaurante()
+{
+int nit;
+cout<<"NIT buscado:";
+cin>>nit;
+FILE *alias;
+alias = fopen("restaurante.sec","rb");
+if(alias == NULL)
+{
+cout<<"error, archivo no encontrado"<<endl;
+}
+else
+{
+cout<<"Nit Nombre Correo tel       ubicacion"<<endl;
+fread(&restaurante,sizeof(restaurante),1,alias);
+while(!feof(alias))
+{
+if(restaurante.estado == 9)
+{
+if(restaurante.nit== nit)
+{
+cout<<restaurante.nit<<" ";
+cout<<restaurante.nombre<<" ";
+cout<<restaurante.correo<<" ";
+cout<<restaurante.tel<<" ";
+cout<<restaurante.ubicacion<<" ";
+}
+}
+fread(&restaurante,sizeof(restaurante),1,alias);
+}
+fclose(alias);
+}
+   cout << "\n\r<<< Oprima cualquier tecla para continuar >>>";
+   getch();
+   return;
+}
+
+void eliminarusuario()
+{
+int ci;
+cout<<"CI buscado:";
+cin>>ci;
+FILE *alias;
+alias = fopen("usuario.sec","rb+");
+if(alias == NULL)
+{
+cout<<"error, archivo no encontrado"<<endl;
+}
+else
+{
+fread(&usuario,sizeof(usuario),1,alias);
+while(!feof(alias))
+{
+if(usuario.estado == 9)
+{
+if(usuario.ci == ci)
+{
+cout<<"Usuario eliminado"<<endl;
+usuario.estado = 0;
+fseek(alias,sizeof(usuario) * (-1),SEEK_CUR);
+fwrite(&usuario,sizeof(usuario),1,alias);
+break;
+}
+}
+fread(&usuario,sizeof(usuario),1,alias);
+}
+fclose(alias);
+}
+   cout << "\n\r<<< Oprima cualquier tecla para continuar >>>";
+   getch();
+   return;
+}
+
+void eliminarrestaurante()
+{
+int nit;
+cout<<"NIT buscado:";
+cin>>nit;
+FILE *alias;
+alias = fopen("restaurante.sec","rb+");
+if(alias == NULL)
+{
+cout<<"error, archivo no encontrado"<<endl;
+}
+else
+{
+fread(&restaurante,sizeof(restaurante),1,alias);
+while(!feof(alias))
+{
+if(restaurante.estado == 9)
+{
+if(restaurante.nit == nit)
+{
+cout<<"Restaurante eliminado"<<endl;
+restaurante.estado = 0;
+fseek(alias,sizeof(restaurante) * (-1),SEEK_CUR);
+fwrite(&restaurante,sizeof(restaurante),1,alias);
+break;
+}
+}
+fread(&restaurante,sizeof(restaurante),1,alias);
+}
+fclose(alias);
+}
+   cout << "\n\r<<< Oprima cualquier tecla para continuar >>>";
+   getch();
+   return;
+}
+
+/*
+void modificarusuario()
+{
+int ci;
+cout<<"Ingrese el CI que desea modificar:";
+cin>>ci;
+FILE *alias;
+alias = fopen("usuario.sec","rb+");
+if(alias == NULL)
+{
+cout<<"error, archivo no encontrado"<<endl;
+}
+fread(&usuario,sizeof(usuario),1,alias);
+while(!feof(alias))
+{
+if(usuario.estado == 9)
+{
+if(usuario.ci == ci)
+{
+cout<<"Ingresar nuevos datos"<<endl;
+cin.ignore();
+usuario.nombre=LeerCadena("Ingrese el nombre del usuario:");
+usuario.correo=LeerCadena("Ingrese el correo del usuario:");
+cout<<"Ingrese el telefono del usuario:";
+cin>>usuario.tel;
+fseek(alias,ftell(alias)-sizeof(usuario),SEEK_SET);
+fwrite(&usuario,sizeof(usuario),1,alias);
+fclose(alias);
+cout << "\n\n\n\rRegistro modificado !!!";
+cout << "\n\r<<< Oprima cualquier tecla para continuar >>>";
+getch();
+return;
+}
+}
+fread(&usuario,sizeof(usuario),1,alias);
+}
+ cout << "\n\rNo se encuentra ese usuario !!!";
+ fclose(alias);
+ cout << "\n\r<<< Oprima cualquier tecla para continuar >>>";
+ getch();
+ return; 
+}
+
+void modificarrestaurante()
+{
+int nit;
+cout<<"Ingrese el NIT que desea modificar:";
+cin>>nit;
+FILE *alias;
+alias = fopen("restaurante.sec","rb+");
+if(alias == NULL)
+{
+cout<<"error, archivo no encontrado"<<endl;
+}
+fread(&restaurante,sizeof(restaurante),1,alias);
+while(!feof(alias))
+{
+if(restaurante.estado == 9)
+{
+if(restaurante.nit == nit)
+{
+cout<<"Ingresar nuevos datos"<<endl;
+cin.ignore();
+restaurante.nombre=LeerCadena("Ingrese el nombre del restaurante:");
+restaurante.correo=LeerCadena("Ingrese el correo del restaurante:");
+cout<<"Ingrese el telefono del restaurante:";
+cin>>restaurante.tel;
+restaurante.ubicacion=LeerCadena("Ingrese la ubicacion del restaurante:");
+fseek(alias,ftell(alias)-sizeof(restaurante),SEEK_SET);
+fwrite(&restaurante,sizeof(restaurante),1,alias);
+fclose(alias);
+cout << "\n\n\n\rRegistro modificado !!!";
+cout << "\n\r<<< Oprima cualquier tecla para continuar >>>";
+getch();
+return;
+}
+}
+fread(&restaurante,sizeof(restaurante),1,alias);
+}
+ cout << "\n\rNo se encuentra ese usuario !!!";
+ fclose(alias);
+ cout << "\n\r<<< Oprima cualquier tecla para continuar >>>";
+ getch();
+ return; 
+}
+*/
+
+void ingresarusuario()
+{
+int CI;
+string clave;
+cout<<"Ingrese su CI:";
+cin>>CI;
+cin.ignore();
+clave=LeerCadena("Ingrese su clave:");
+FILE *alias;
+alias = fopen("usuario.sec","rb");
+if(alias == NULL)
+{
+cout<<"error, archivo no encontrado"<<endl;
+}
+fread(&usuario,sizeof(usuario),1,alias);
+while(!feof(alias))
+{
+if(usuario.ci == CI)
+{
+if(usuario.clave== clave)
+{
+menuusuario();
+}
+}
+fread(&usuario,sizeof(usuario),1,alias);
+}
+   fclose(alias);
+   system("cls");
+   return;
+}
+
+void menuusuario()
+{string p;
+int op;
+do
+{
+system("cls");
+cout<<"---------Bienvenido Usuario-------"<<endl;
+cout<<"1.Ver lista de restaurantes"<<endl;
+cout<<"2.buscar restaurantes cercanos"<<endl;
+cout<<"0.Salir"<<endl;
+cout<<"-----------"<<endl;
+cout<<"Ingrese la opcion que desea realizar:";
+cin>>op;
+
+switch(op)
+{
+case 1:
+listadorestaurante();
+break;
+case 2:
+p= lugar();
+l( p);
+break;
+case 0:
+cout<<"Salir";
+system("cls");
+break;
+default:
+cout<<"Error";
+system("cls");
+break;
+}
+}while(op!=0);
+}
+
+
+void ingresarrestaurante()
+{
+int nit;
+string clave;
+cout<<"Ingrese su NIT:";
+cin>>nit;
+cin.ignore();
+clave=LeerCadena("Ingrese su clave:");
+FILE *alias;
+alias = fopen("restaurante.sec","rb");
+if(alias == NULL)
+{
+cout<<"error, archivo no encontrado"<<endl;
+}
+fread(&restaurante,sizeof(restaurante),1,alias);
+while(!feof(alias))
+{
+if(restaurante.nit == nit)
+{
+if(restaurante.clave== clave)
+{
+menurestaurante();
+}
+}
+fread(&restaurante,sizeof(restaurante),1,alias);
+}
+   fclose(alias);
+   system("cls");
+   return;
+}
+
+void menurestaurante()
+{
+int op;
+do
+{
+system("cls");
+cout<<"---------Bienvenido Restaurante-------"<<endl;
+cout<<"1.modificar datos"<<endl;
+cout<<"0.Salir"<<endl;
+cout<<"-----------"<<endl;
+cout<<"Ingrese la opcion que desea realizar:";
+cin>>op;
+
+switch(op)
+{
+case 1:
+//modificarrestaurante();
+break;
+case 0:
+cout<<"Salir";
+system("cls");
+break;
+default:
+cout<<"Error";
+system("cls");
+break;
+}
+}while(op!=0);
+}
+
+
+/*
+void altamenu()
+{
+int i,j=0,nit,conti;
+cout<<"Ingrese su nit nuevamente:";
+cin>>nit;
+alias=fopen("menu.sec","ab");
+fread(&menu,sizeof(menu),1, alias);
+do
+{
+cin.ignore();
+restaurante.menu.platos=LeerCadena("Ingrese el plato de su menu:");
+restaurante.menu.gaseosa=LeerCadena("Ingrese la gaseosa de su menu:");
+restaurante.menu.platos=LeerCadena("Ingrese el plato de su menu:");
+restaurante.menu.platos=LeerCadena("Ingrese el plato de su menu:");
+restaurante.menu.platos=LeerCadena("Ingrese el plato de su menu:");
+
+cout<<"Desea continuar?SI--->1";
+cin>>conti;
+j++;
+fwrite(&menu,sizeof(menu),1, alias);
+}while(conti==1);
+alias=fopen("menu.sec","ab");
+fwrite(&menu,sizeof(menu),1, alias);
+fclose(alias);
+system("cls");
+cout<<"MENU REGISTRADO!!!!"<<endl;
+cout<<"<<<<OPRIMA CUALQUIER TECLA PARA CONTINUAR>>>>";
+getch();
+system("cls");
+}
+*/
+/*
+void listarmenu()
+ {   t_menu menu[MAX];
+system("cls"); 
+   cout << "\n\rLISTADO DE MENU";
+   alias=fopen("menu.sec","rb");
+   if(alias==NULL)   
+   {cout << "\n\n\n\rNo existe el archivo !!!";
+    cout << "\n\r<<< Oprima cualquier tecla para continuar >>>";
+getch();
+return;
+   } 
+
+   cout << "\n\r Nombre    ";
+   cout << "\n\r---------"<<endl;
+   fread(&menu,sizeof(menu),1,alias);
+
+   // Lee el "ususario", de tamano=sizeof(usuario) del archivo "alias"
+   while(!feof(alias)) // Ciclo mientras no se encuentre el final del archivo   
+   {
+  
+     cout<<<<endl;
+fread(&usuario,sizeof(usuario),1,alias);
+   }   
+   fclose(alias); // Cierra el archivo   
+   cout << "\n\r-----------------------------------------------------------------------";
+   cout << "\n\rFin del listado !!!";
+   cout << "\n\r<<< Oprima cualquier tecla para continuar >>>";
+   getch();
+   return;
+   }*/
+string lugar()
+{string r;
+int op;
+
+do
+{
+cout<<"-------UBICACIONES-------"<<endl;
+cout<<"1.-1er anillo Av. Cañoto "<<endl;
+cout<<"2.-1er anillo Av.Irala"<<endl;
+cout<<"3.-1er anillo Av.Viadma"<<endl;
+cout<<"4.-1er anillo Av. Uruguay"<<endl;
+cout<<"5.-1er anillo Av. Melchor Pinto "<<endl;
+cout<<"6.-1er anillo Av. Landivar"<<endl;
+cout<<"7.-1er anillo Av. Cristo Redentor"<<endl;
+cout<<"8.-1er anillo Av. Grigota"<<endl;
+cout<<"9.-2er anillo Av grigota "<<endl;
+cout<<"10.-2er anillo Av. la barraca"<<endl;
+cout<<"11.-2er anillo Av. tres pasos al fente"<<endl;
+cout<<"12.-2er anillo Av. av. brasil"<<endl;
+cout<<"13.-2er anillo Av. virgende cotoca "<<endl;
+cout<<"14.-2er anillo Av. paragua"<<endl;
+cout<<"15.-3er anillo Av. mutualista"<<endl;
+cout<<"16.-3er anillo Av. beni"<<endl;
+cout<<"17.-3er anillo Av. banzer"<<endl;
+cout<<"18.-3er anillo Av. alemana"<<endl;
+cout<<"19.-4er anillo Av. Banzer"<<endl;
+cout<<"20.-4er anillo Av. Beni"<<endl;
+cout<<"21.-4er anillo Av. Alemana"<<endl;
+cout<<"22.-4er anillo Av.Mutualista"<<endl;
+
+cout<<"--------------"<<endl;
+cout<<"Ingrese una opcion :";
+cin>>op;
+cout<<endl;
+switch(op)
+{
+case 1:
+	system("cls");
+	r="Av. Cañoto";
+	return r;
+break;
+case 2:
+	system("cls");
+	r="Av. Irala";
+	return r;
+    break;
+case 3:
+	system("cls");
+	r="Av. Viedma";
+	return r;
+	break;
+case 4:
+	system("cls");
+	r="Av. Uruguay";
+	return r;
+	break;
+case 5:
+	system("cls");
+	r="Av. ";
+	return r;
+	break;
+case 6:
+	system("cls");
+	r="Av. ";
+	return r;
+    break;
+case 7:
+	system("cls");
+	r="Av. ";
+	return r;
+	break;
+case 8:
+	system("cls");
+	r="Av.";
+	return r;
+	break;
+case 9:
+	system("cls");
+	r="Av. ";
+	return r;
+    break;
+case 10:
+	system("cls");
+	r="Av. ";
+	return r;
+	break;
+case 11:
+	system("cls");
+	r="Av. ";
+	return r;
+	break;
+case 12:
+	system("cls");
+	r="Av. ";
+	return r;
+	break;
+case 13:
+	system("cls");
+	r="Av. ";
+	return r;
+    break;
+case 14:
+	system("cls");
+	r="Av. ";
+	return r;
+	break;
+case 15:
+	system("cls");
+	r="Av. ";
+	return r;
+	break;
+case 16:
+	system("cls");
+	r="Av. ";
+	return r;
+	break;
+case 17:
+	system("cls");
+	r="Av. ";
+	return r;
+    break;
+case 18:
+	system("cls");
+	r="Av. ";
+	return r;
+	break;
+case 19:
+	system("cls");
+	r="Av. ";
+	break;
+case 20:
+	system("cls");
+	r="Av. ";
+	return r;
+    break;
+case 21:
+	system("cls");
+	r="Av. ";
+	return r;
+    break;
+case 22:
+	system("cls");
+	r="Av. ";
+	return r;
+    break;
+case 0:
+   cout<<"SALIR"<<endl;
+   system("cls");
+   break;
+default:
+   cout<<"ERROR"<<endl;
+   system("cls");
+   break;
+}
+}while(op!=0);
+return r  ;
+
+
+}
+void l(string p)
+{int nit;
+FILE *alias;
+alias = fopen("restaurante.sec","rb");
+if(alias == NULL)
+{
+cout<<"error, archivo no encontrado"<<endl;
+}
+else
+{
+cout<<"Nit Nombre Correo tel       ubicacion"<<endl;
+fread(&restaurante,sizeof(restaurante),1,alias);
+while(!feof(alias))
+{
+if(restaurante.estado == 9)
+{
+if(restaurante.ub== p)
+{
+cout<<restaurante.nit<<" ";
+cout<<restaurante.nombre<<" ";
+cout<<restaurante.correo<<" ";
+cout<<restaurante.tel<<" ";
+cout<<restaurante.ubicacion<<" ";
+}
+}
+fread(&restaurante,sizeof(restaurante),1,alias);
+}
+fclose(alias);
+}
+   cout << "\n\r<<< Oprima cualquier tecla para continuar >>>";
+   getch();
+   return;
+}
